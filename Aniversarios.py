@@ -30,10 +30,12 @@ if birthdays_today.empty:
 #Ler ficheiro PowerPoint, que deve estar na pasta mapeada do OneDrive
 pptx_path = fr"C:\Users\{username}\VINCI Energies\GO-Data & AI - General\6 - PROJECTS\03 - DATA EXCELLENCE CENTER\RPAs - internos\HappyBirthday\parabens template.pptx"
 
+#Para cada pessoa:
 for _, row in birthdays_today.iterrows():
     name = row['Nome'].split()[0]
     email = row['email']
 
+    #Abrir PowerPoint
     ppt_app = win32com.client.Dispatch("PowerPoint.Application")
     presentation = ppt_app.Presentations.Open(pptx_path, WithWindow=False)
     slide = presentation.Slides(1)
@@ -50,9 +52,10 @@ for _, row in birthdays_today.iterrows():
     slide.Export(temp_path_name, 'PNG')
 
 
-    # Preparar email
+    # Abrir Outlook
     outlook = win32com.client.Dispatch('Outlook.Application')
 
+    #Preparar email
     mail = outlook.CreateItem(0)
     mail.To = email
     mail.Subject = f"Parabéns, {name}!"
@@ -61,10 +64,12 @@ for _, row in birthdays_today.iterrows():
     attachment.PropertyAccessor.SetProperty(
         "http://schemas.microsoft.com/mapi/proptag/0x3712001F", "slideimage"
     )
+
+    #Enviar
     mail.Send()
     print(f"Sent birthday email to {name} ({email})")
 
-    # --- CLEAN UP TEMP FILES ---
+    #Limpar ficheiros temporários e fechar PowerPoint
     os.remove(temp_path_name)
     presentation.Close()
     ppt_app.Quit()

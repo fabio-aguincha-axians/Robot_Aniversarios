@@ -9,7 +9,7 @@ import os
 username = os.environ["USERNAME"]
 user_Email = os.environ["MY_EMAIL"]
 user_Password = keyring.get_password("Robot_Aniversarios", user_Email)
-from_Email = "fabio.aguincha@axians.com"
+from_Email = os.environ["FROM_EMAIL"]
 temp_path=fr"C:\Users\{username}\Documents"
 
 
@@ -19,7 +19,6 @@ df = pd.read_excel(file_path)
 
 #Filtrar pelas pessoas que fazem anos hoje
 today=datetime.today()
-today=datetime(2025,1,13)       #data martelada
 birthdays_today = df[
     (df["aniversário"].dt.day == today.day) &
     (df["aniversário"].dt.month == today.month)

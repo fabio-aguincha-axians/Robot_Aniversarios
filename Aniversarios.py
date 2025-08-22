@@ -7,10 +7,8 @@ import os
 
 #Inicializar variáveis
 username = os.environ["USERNAME"]
-user_Email = "fabio.aguincha@axians.com"
+user_Email = os.environ["MY_EMAIL"]
 user_Password = keyring.get_password("Robot_Aniversarios", user_Email)
-server_SMTP = "smtp.office365.com"
-port_SMTP= 587
 from_Email = "fabio.aguincha@axians.com"
 temp_path=fr"C:\Users\{username}\Documents"
 

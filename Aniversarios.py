@@ -6,7 +6,7 @@ import win32com.client
 import os
 
 #Inicializar variáveis
-username = os.environ["USERNAME"]
+username = os.environ["MY_USERNAME"]
 user_Email = os.environ["MY_EMAIL"]
 user_Password = keyring.get_password("Robot_Aniversarios", user_Email)
 from_Email = os.environ["FROM_EMAIL"]
@@ -58,6 +58,8 @@ for _, row in birthdays_today.iterrows():
     #Preparar email
     mail = outlook.CreateItem(0)
     mail.To = email
+    mail.BCC = "joana.morgado@axians.com; goncalo.vasconcelos@axians.com; joao.monteiro-simoes@axians.com; catarina.antunes-santos@axians.com"
+    mail.SentOnBehalfOfName = from_Email
     mail.Subject = f"Parabéns, {name}!"
     mail.HTMLBody = f'<html><body><img src="cid:slideimage"></body></html>'
     attachment = mail.Attachments.Add(temp_path_name)

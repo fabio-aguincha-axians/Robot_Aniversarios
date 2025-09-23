@@ -4,12 +4,17 @@ from datetime import datetime
 from pptx import Presentation
 import win32com.client
 import os
+from dotenv import load_dotenv
+import pythoncom
+import time
+import sys
 
 #Inicializar variáveis
-username = os.environ["MY_USERNAME"]
-user_Email = os.environ["MY_EMAIL"]
+load_dotenv(r"C:\Users\fabio.aguincha\Documents\Repos\Robot_Aniversarios\.env")
+username = os.getenv("MY_USERNAME")
+user_Email = os.getenv("MY_EMAIL")
 user_Password = keyring.get_password("Robot_Aniversarios", user_Email)
-from_Email = os.environ["FROM_EMAIL"]
+from_Email = os.getenv("FROM_EMAIL")
 temp_path=fr"C:\Users\{username}\Documents"
 
 
@@ -19,6 +24,7 @@ df = pd.read_excel(file_path)
 
 #Filtrar pelas pessoas que fazem anos hoje
 today=datetime.today()
+#today=datetime(2025,10,23)
 birthdays_today = df[
     (df["aniversário"].dt.day == today.day) &
     (df["aniversário"].dt.month == today.month)
@@ -51,7 +57,40 @@ for _, row in birthdays_today.iterrows():
     temp_path_name = os.path.join(temp_path, f"temp_slide_{name}.png")
     slide.Export(temp_path_name, 'PNG')
 
+    """
+    def get_outlook_application(max_retries=3):
+        for attempt in range(max_retries):
+            try:
+                # Initialize COM
+                pythoncom.CoInitialize()
+            
+                # Try to get existing Outlook instance
+                try:
+                    outlook = win32com.client.GetActiveObject('Outlook.Application')
+                    return outlook
+                except pythoncom.com_error:
+                    # If no existing instance, try to create one
+                    outlook = win32com.client.Dispatch('Outlook.Application')
+                    # Give Outlook time to initialize
+                    time.sleep(2)
+                    return outlook
+                
+            except Exception as e:
+                print(f"Attempt {attempt + 1} failed: {e}")
+                if attempt < max_retries - 1:
+                    time.sleep(5)  # Wait before retry
+                else:
+                    print("Failed to connect to Outlook after all retries")
+                    return None
+    
+        return None
 
+    # Use it in your script
+    outlook = get_outlook_application()
+    if outlook is None:
+        sys.exit(1)
+    """
+    
     # Abrir Outlook
     outlook = win32com.client.Dispatch('Outlook.Application')
 

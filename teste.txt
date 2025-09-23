@@ -1,0 +1,23 @@
+
+Waiting for 4294967234, press a key to continue ...
+Traceback (most recent call last):
+  File "C:\Users\[user]\AppData\Roaming\Python\Python313\site-packages\win32com\client\dynamic.py", line 81, in _GetGoodDispatch
+    IDispatch = pythoncom.connect(IDispatch)
+pywintypes.com_error: (-2147221021, 'Operation unavailable', None, None)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\[user]\Documents\Repos\Robot_Aniversarios\Aniversarios.py", line 61, in <module>
+    outlook = win32com.client.Dispatch('Outlook.Application')
+  File "C:\Users\[user]\AppData\Roaming\Python\Python313\site-packages\win32com\client\__init__.py", line 116, in Dispatch
+    dispatch, userName = dynamic._GetGoodDispatchAndUserName(dispatch, userName, clsctx)
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\[user]\AppData\Roaming\Python\Python313\site-packages\win32com\client\dynamic.py", line 101, in _GetGoodDispatchAndUserName
+    return (_GetGoodDispatch(IDispatch, clsctx), userName)
+            ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\[user]\AppData\Roaming\Python\Python313\site-packages\win32com\client\dynamic.py", line 83, in _GetGoodDispatch
+    IDispatch = pythoncom.CoCreateInstance(
+        IDispatch, None, clsctx, pythoncom.IID_IDispatch
+    )
+pywintypes.com_error: (-2146959355, 'Server execution failed', None, None)
